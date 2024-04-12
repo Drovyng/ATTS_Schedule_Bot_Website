@@ -8,104 +8,10 @@
         input, select {
             border-radius: 8px;
         }
-
         .input-group{
 
             height: 20px;
             transform: translateY(1px);
-        }
-
-        .checkbox-custom {
-            display: inline-block;
-            height: 28px;
-            line-height: 28px;
-            margin-right: 10px;
-            position: relative;
-            vertical-align: middle;
-            font-size: 14px;
-            user-select: none;
-        }
-        .checkbox-custom .checkbox-custom-switch {
-            display: inline-block;
-            height: 28px;
-            width: 66px;
-            box-sizing: border-box;
-            position: relative;
-            border-radius: 2px;
-            background: #848484;
-            transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
-        }
-        .checkbox-custom .checkbox-custom-switch:before {
-            content: attr(data-label-on);
-            display: inline-block;
-            box-sizing: border-box;
-            width: 33px;
-            padding: 0 10px;
-            position: absolute;
-            top: 0;
-            left: 33px;
-            text-transform: uppercase;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 10px;
-            line-height: 28px;
-        }
-        .checkbox-custom .checkbox-custom-switch:after {
-            content: attr(data-label-off);
-            display: inline-block;
-            box-sizing: border-box;
-            width: 32px;
-            border-radius: 1px;
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            z-index: 5;
-            text-transform: uppercase;
-            text-align: center;
-            background: white;
-            line-height: 26px;
-            font-size: 10px;
-            color: #777;
-            transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
-        }
-        .checkbox-custom input[type="checkbox"] {
-            display: block;
-            width: 0;
-            height: 0;
-            position: absolute;
-            z-index: -1;
-            opacity: 0;
-        }
-        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch {
-            background-color: #98cc54;
-        }
-        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch:before {
-            content: attr(data-label-off);
-            left: 0;
-        }
-        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch:after {
-            content: attr(data-label-on);
-            color: #8fbf4f;
-            transform: translate3d(32px, 0, 0);
-        }
-
-        /* Hover */
-        .checkbox-custom input[type="checkbox"]:not(:disabled) + .checkbox-custom-switch:hover {
-            cursor: pointer;
-        }
-        .checkbox-custom input[type="checkbox"]:not(:disabled) + .checkbox-custom-switch:hover:after {
-            box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Disabled */
-        .checkbox-custom input[type=checkbox]:disabled + .checkbox-custom-switch {
-            opacity: 0.6;
-            filter: grayscale(50%);
-        }
-
-        /* Focus */
-        .checkbox-custom.focused .checkbox-custom-switch:after {
-            box-shadow: inset 0px 0px 4px #ff5623;
         }
     </style>
 </head>
@@ -223,7 +129,7 @@
             if (value !== ""){
                 return parseInt(value)
             }
-            return null
+            return -1
         }
 
         function sendAndClose() {
