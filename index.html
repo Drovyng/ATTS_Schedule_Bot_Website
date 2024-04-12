@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        input, select {
+            border-radius: 8px;
+        }
+
+        .input-group{
+
+            height: 20px;
+            transform: translateY(1px);
+        }
+
+        .checkbox-custom {
+            display: inline-block;
+            height: 28px;
+            line-height: 28px;
+            margin-right: 10px;
+            position: relative;
+            vertical-align: middle;
+            font-size: 14px;
+            user-select: none;
+        }
+        .checkbox-custom .checkbox-custom-switch {
+            display: inline-block;
+            height: 28px;
+            width: 66px;
+            box-sizing: border-box;
+            position: relative;
+            border-radius: 2px;
+            background: #848484;
+            transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+        }
+        .checkbox-custom .checkbox-custom-switch:before {
+            content: attr(data-label-on);
+            display: inline-block;
+            box-sizing: border-box;
+            width: 33px;
+            padding: 0 10px;
+            position: absolute;
+            top: 0;
+            left: 33px;
+            text-transform: uppercase;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 10px;
+            line-height: 28px;
+        }
+        .checkbox-custom .checkbox-custom-switch:after {
+            content: attr(data-label-off);
+            display: inline-block;
+            box-sizing: border-box;
+            width: 32px;
+            border-radius: 1px;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            z-index: 5;
+            text-transform: uppercase;
+            text-align: center;
+            background: white;
+            line-height: 26px;
+            font-size: 10px;
+            color: #777;
+            transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+        }
+        .checkbox-custom input[type="checkbox"] {
+            display: block;
+            width: 0;
+            height: 0;
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch {
+            background-color: #98cc54;
+        }
+        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch:before {
+            content: attr(data-label-off);
+            left: 0;
+        }
+        .checkbox-custom input[type="checkbox"]:checked + .checkbox-custom-switch:after {
+            content: attr(data-label-on);
+            color: #8fbf4f;
+            transform: translate3d(32px, 0, 0);
+        }
+
+        /* Hover */
+        .checkbox-custom input[type="checkbox"]:not(:disabled) + .checkbox-custom-switch:hover {
+            cursor: pointer;
+        }
+        .checkbox-custom input[type="checkbox"]:not(:disabled) + .checkbox-custom-switch:hover:after {
+            box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Disabled */
+        .checkbox-custom input[type=checkbox]:disabled + .checkbox-custom-switch {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+
+        /* Focus */
+        .checkbox-custom.focused .checkbox-custom-switch:after {
+            box-shadow: inset 0px 0px 4px #ff5623;
+        }
+    </style>
+</head>
+<body onresize="rescale()" style="display: grid; grid-template-columns: repeat(3, 1fr); background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ), linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);">
+    <div id="main-body" style="aspect-ratio: 720/1280; width: min(95vw, 500px); height: auto; background: #FFFFFF88; grid-column: 2; border-radius: 50px; display: grid; grid-template-rows: repeat(26, 1fr) 20px 1fr 20px; align-items: center; align-content: center; text-align: center">
+        <div>
+            <h1 style='font-size: min(7vw, 35px)'>Загрузить Расписание</h1>
+            <div>
+                <input class="input-group" id="group-id" type="text" placeholder="Группа" style="width: 25%;">
+                <div style="display: inline-block; width: 10px"></div>
+                <input id="next-week" type="checkbox" style="transform: translate(0px, 6px); margin: 0; padding-block: 0; padding-inline: 0; width: 20px; aspect-ratio: 1; height: auto">
+                <p style="display: inline-block; font-size: 20px; margin: 0; font-weight: bold; transform: translateY(2px)">След. Неделя?</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlExtra = JSON.parse(decodeURI(window.location).split("?")[1]);
+
+        const pairsList = urlExtra[0];
+        const teachersList = urlExtra[1];
+        const cabinetsList = ["спортзал", "библиотека"];
+
+        for (let i = 0; i < 25; i++) {
+            cabinetsList.push("" + (i+1));
+        }
+
+        Telegram.WebApp.ready();
+
+        let pairsData = [];
+
+        const mainBody = document.getElementById("main-body");
+
+        function rescale(){
+            mainBody.style.scale = Math.min(window.innerWidth * 0.95 / 500, 1);
+        }
+
+        const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+
+        for (let i = 0; i < 6; i++) {
+            pairsData.push([0, 0, 0, 0]);
+            mainBody.innerHTML += "<div>\n" +
+                "            <h2 style='font-size: min(4.75vw, 25px)'>" + days[i] + "</h2>\n" +
+                "            <select class='select-offset' id='pairdata-" + i + "-0' style=\"width: 25%; transform: translateY(-10px);\"></select>\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <select class='select-pair' id='pairdata-" + i + "-1-1' style=\"width: 40%\"></select>\n" +
+                "            <select class='select-teacher' id='pairdata-" + i + "-1-2' style=\"width: 25%\"></select>\n" +
+                "            <select class='select-cabinet' id='pairdata-" + i + "-1-3' style=\"width: 20%\"></select>\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <select class='select-pair' id='pairdata-" + i + "-2-1' style=\"width: 40%\"></select>\n" +
+                "            <select class='select-teacher' id='pairdata-" + i + "-2-2' style=\"width: 25%\"></select>\n" +
+                "            <select class='select-cabinet' id='pairdata-" + i + "-2-3' style=\"width: 20%\"></select>\n" +
+                "        </div>\n" +
+                "        <div>\n" +
+                "            <select class='select-pair' id='pairdata-" + i + "-3-1' style=\"width: 40%\"></select>\n" +
+                "            <select class='select-teacher' id='pairdata-" + i + "-3-2' style=\"width: 25%\"></select>\n" +
+                "            <select class='select-cabinet' id='pairdata-" + i + "-3-3' style=\"width: 20%\"></select>\n" +
+                "        </div>"
+        }
+        mainBody.innerHTML += "<div style='grid-row: 28;'>" +
+            "<button onclick='sendAndClose()' style='aspect-ratio: 10/2; width: 50%; height: auto; border-radius: 25px; font-size: 25px; font-weight: bold'>Отправить</button>" +
+            "</div>"
+
+        function selectAdd(select, value, text){
+            let option = document.createElement('option');
+            option.value = value;
+            option.text = text;
+            select.appendChild(option);
+        }
+        const selectOffset_ = document.getElementsByClassName("select-offset")
+        for (let i = 0; i < selectOffset_.length; i++) {
+            let selectOffset = selectOffset_[i];
+            selectAdd(selectOffset, "", "Смещение Пар");
+            for (let i = 0; i <= 6; i++) {
+                selectAdd(selectOffset, "" + i, "" + i);
+            }
+        }
+        const selectPair_ = document.getElementsByClassName("select-pair")
+        for (let i = 0; i < selectPair_.length; i++) {
+            let selectPair = selectPair_[i];
+            selectAdd(selectPair, "", "Пара");
+            for (let i = 0; i < pairsList.length; i++) {
+                selectAdd(selectPair, "" + i, pairsList[i]);
+            }
+        }
+        const selectTeacher_ = document.getElementsByClassName("select-teacher")
+        for (let i = 0; i < selectTeacher_.length; i++) {
+            let selectTeacher = selectTeacher_[i];
+            selectAdd(selectTeacher, "", "Преподаватель");
+            for (let i = 0; i < teachersList.length; i++) {
+                selectAdd(selectTeacher, "" + i, teachersList[i]);
+            }
+        }
+
+        const selectCabinet_ = document.getElementsByClassName("select-cabinet")
+        for (let i = 0; i < selectCabinet_.length; i++) {
+            let selectCabinet = selectCabinet_[i];
+            selectAdd(selectCabinet, "", "Кабинет");
+            for (let i = 1; i <= 25; i++) {
+                selectAdd(selectCabinet, "" + (i + 1), "" + i);
+            }
+            selectAdd(selectCabinet, "1", "Библиотека");
+            selectAdd(selectCabinet, "0", "Спортзал")
+        }
+
+        rescale();
+
+        function getOrNull(value){
+            if (value !== ""){
+                return parseInt(value)
+            }
+            return null
+        }
+
+        function sendAndClose() {
+            let toJson = [document.getElementById("group-id").value, document.getElementById("next-week").checked];
+            for (let i = 0; i < 6; i++) {
+                let first = "pairdata-" + i + "-";
+                let data = [getOrNull(document.getElementById(first + "0").value)];
+                for (let j = 1; j < 4; j++) {
+                    data.push([
+                        getOrNull(document.getElementById(first + j + "-1").value),
+                        getOrNull(document.getElementById(first + j + "-2").value),
+                        getOrNull(document.getElementById(first + j + "-3").value)
+                    ]);
+                }
+                toJson.push(data);
+            }
+            Telegram.WebApp.sendData(JSON.stringify(toJson));
+            Telegram.WebApp.close();
+        }
+    </script>
+</body>
+</html>
