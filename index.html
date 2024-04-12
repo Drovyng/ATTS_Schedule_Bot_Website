@@ -133,7 +133,7 @@
         }
 
         function sendAndClose() {
-            let toJson = [document.getElementById("group-id").value, document.getElementById("next-week").checked];
+            let toJson = [document.getElementById("group-id").value, document.getElementById("next-week").checked ? 1 : 0];
             for (let i = 0; i < 6; i++) {
                 let first = "pairdata-" + i + "-";
                 let data = [getOrNull(document.getElementById(first + "0").value)];
