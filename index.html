@@ -31,7 +31,7 @@
         </div>
     </div>
     <script>
-        let url = window.location.toString().replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+        let url = window.location.hash.toString().replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
         const urlExtra = JSON.parse(decodeURI(url).split("?")[1]);
 
         const pairsList = urlExtra[0];
