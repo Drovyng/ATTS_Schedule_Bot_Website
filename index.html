@@ -31,10 +31,14 @@
         </div>
     </div>
     <script>
-        Telegram.WebApp.ready();
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
 
-        const pairsList = Telegram.WebApp.initData["pairsList"];
-        const teachersList = Telegram.WebApp.initData["teachersList"];
+        tg.ready();
+
+
+
+        const pairsList = tg.initDataUnsafe["pairsList"];
+        const teachersList = tg.initDataUnsafe["teachersList"];
 
         const cabinetsList = ["спортзал", "библиотека"];
         for (let i = 0; i < 25; i++) {
@@ -142,8 +146,8 @@
                 }
                 toJson.push(data);
             }
-            Telegram.WebApp.sendData(JSON.stringify(toJson));
-            Telegram.WebApp.close();
+            tg.sendData(JSON.stringify(toJson));
+            tg.close();
         }
     </script>
 </body>
