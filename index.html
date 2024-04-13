@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         input, select {
             border-radius: 8px;
@@ -29,20 +30,21 @@
             <p style="display: inline-block; font-size: 20px; margin: 0; font-weight: bold; transform: translateY(2px)">След. Неделя?</p>
         </div>
     </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
 
-        tg.ready();
         tg.expand();
+        tg.ready();
 
-        //alert(tg.initData);
-        tg.showAlert("Данные: " + tg.initData);
+        let url = window.location.toString().replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+        const urlExtra = JSON.parse(decodeURI(url.split("#customdata")[1]));
 
-        const pairsList = tg.initDataUnsafe["pairsList"];
-        const teachersList = tg.initDataUnsafe["teachersList"];
+        tg.showAlert(decodeURI(url.split("#customdata")[1]));
 
+        const pairsList = urlExtra[0];
+        const teachersList = urlExtra[1];
         const cabinetsList = ["спортзал", "библиотека"];
+
         for (let i = 0; i < 25; i++) {
             cabinetsList.push("" + (i+1));
         }
