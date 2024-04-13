@@ -38,10 +38,12 @@
         tg.ready();
 
         try {
+            let url = window.location.toString();
+            url = url.substring(url.indexOf("#customdata" + 11), url.indexOf("customdataend"));
+            url = url.replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
 
-            tg.showAlert(window.location.toString().substring(window.location.toString().indexOf("#"), window.location.toString().indexOf("#") + 29));
+            tg.showAlert(url.substr(0, 29))
 
-            let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
             const urlExtra = JSON.parse(decodeURI(url));
 
             tg.showAlert("Дата: " + decodeURI(url.split("#customdata")[1]));
