@@ -31,7 +31,11 @@
         </div>
     </div>
     <script>
-        const urlExtra = JSON.parse(decodeURI(window.location).split("?")[1]);
+        let url = window.location;
+        url = url.toString().replace("q", "[");
+        url = url.toString().replace("w", "\"");
+        url = url.toString().replace("e", "]");
+        const urlExtra = JSON.parse(decodeURI(url).split("?")[1]);
 
         const pairsList = urlExtra[0];
         const teachersList = urlExtra[1];
