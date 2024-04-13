@@ -36,25 +36,32 @@
         tg.expand();
         tg.ready();
 
-        tg.showAlert("Положение: " + window.location.toString());
-        tg.showAlert("Положение: " + location.toString());
+        try {
 
-        let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
-        const urlExtra = JSON.parse(decodeURI(url));
+            tg.showAlert("Положение: " + window.location.toString());
+            tg.showAlert("Положение: " + location.toString());
 
-        tg.showAlert("Дата: " + decodeURI(url.split("#customdata")[1]));
+            let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+            const urlExtra = JSON.parse(decodeURI(url));
 
-        const pairsList = urlExtra[0];
-        const teachersList = urlExtra[1];
-        const cabinetsList = ["спортзал", "библиотека"];
+            tg.showAlert("Дата: " + decodeURI(url.split("#customdata")[1]));
 
-        for (let i = 0; i < 25; i++) {
-            cabinetsList.push("" + (i+1));
+            const pairsList = urlExtra[0];
+            const teachersList = urlExtra[1];
+            const cabinetsList = ["спортзал", "библиотека"];
+
+            for (let i = 0; i < 25; i++) {
+                cabinetsList.push("" + (i + 1));
+            }
+
+            let pairsData = [];
+
+            const mainBody = document.getElementById("main-body");
+
         }
-
-        let pairsData = [];
-
-        const mainBody = document.getElementById("main-body");
+        catch (e) {
+            tg.showAlert(e.toString())
+        }
 
         function rescale(){
             mainBody.style.scale = Math.min(window.innerWidth * 0.95 / 500, 1);
