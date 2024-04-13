@@ -39,6 +39,7 @@
         let url = window.location.toString().replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
         const urlExtra = JSON.parse(decodeURI(url.split("#customdata")[1]));
 
+        tg.showAlert(window.location.toString());
         tg.showAlert(decodeURI(url.split("#customdata")[1]));
 
         const pairsList = urlExtra[0];
