@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         input, select {
             border-radius: 8px;
@@ -30,12 +29,14 @@
             <p style="display: inline-block; font-size: 20px; margin: 0; font-weight: bold; transform: translateY(2px)">След. Неделя?</p>
         </div>
     </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
 
         tg.expand();
         tg.ready();
 
+        tg.showAlert("Положение: " + window.location.toString());
         tg.showAlert("Положение: " + location.toString());
 
         let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
