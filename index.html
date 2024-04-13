@@ -36,8 +36,8 @@
         tg.expand();
         tg.ready();
 
-        let url = window.location.toString().replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
-        const urlExtra = JSON.parse(decodeURI(url.split("#customdata")[1]));
+        let url = window.location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+        const urlExtra = JSON.parse(decodeURI(url));
 
         tg.showAlert(window.location.toString());
         tg.showAlert(decodeURI(url.split("#customdata")[1]));
