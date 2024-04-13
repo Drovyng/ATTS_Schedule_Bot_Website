@@ -36,10 +36,11 @@
         tg.expand();
         tg.ready();
 
+        tg.showAlert("Положение: " + location.toString());
+
         let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
         const urlExtra = JSON.parse(decodeURI(url));
 
-        tg.showAlert("Положение: " + location.toString());
         tg.showAlert("Дата: " + decodeURI(url.split("#customdata")[1]));
 
         const pairsList = urlExtra[0];
