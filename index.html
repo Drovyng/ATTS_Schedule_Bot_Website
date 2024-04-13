@@ -39,8 +39,8 @@
 
         try {
 
-            tg.showAlert("Положение: " + window.location.toString());
-            tg.showAlert("Положение: " + location.toString());
+            if (window.location.toString().length >= 29*2) tg.showAlert("Положение: " + window.location.toString().substring(window.location.toString().length - 29 * 2, 29));
+            tg.showAlert("Положение: " + window.location.toString().substring(window.location.toString().length - 29));
 
             let url = location.toString().split("#customdata")[1].replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
             const urlExtra = JSON.parse(decodeURI(url));
