@@ -40,8 +40,9 @@
         try {
             let url = window.location.toString();
             url = url.substring(url.indexOf("#customdata" + 11), url.indexOf("customdataend"));
-            url = url.replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
             url = decodeURI(url);
+            url = url.replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+
 
             tg.showAlert(url.substr(0, 29));
 
