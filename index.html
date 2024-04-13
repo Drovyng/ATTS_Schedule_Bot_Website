@@ -34,9 +34,10 @@
         let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
 
         tg.ready();
+        tg.expand();
 
         //alert(tg.initData);
-        tg.showAlert(tg.initData, null);
+        tg.showAlert("Данные: " + tg.initData);
 
         const pairsList = tg.initDataUnsafe["pairsList"];
         const teachersList = tg.initDataUnsafe["teachersList"];
