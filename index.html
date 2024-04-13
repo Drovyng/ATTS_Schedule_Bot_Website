@@ -41,12 +41,11 @@
             let url = window.location.toString();
             url = url.substring(url.indexOf("#customdata" + 11), url.indexOf("customdataend"));
             url = url.replaceAll("q", "[").replaceAll("w", "\"").replaceAll("e", "]").replaceAll("t", " ").replaceAll("r", ",").replaceAll("y", ".");
+            url = decodeURI(url);
 
-            tg.showAlert(url.substr(0, 29))
+            tg.showAlert(url.substr(0, 29));
 
             const urlExtra = JSON.parse(decodeURI(url));
-
-            tg.showAlert("Дата: " + decodeURI(url.split("#customdata")[1]));
 
             const pairsList = urlExtra[0];
             const teachersList = urlExtra[1];
