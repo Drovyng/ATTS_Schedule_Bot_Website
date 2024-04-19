@@ -15,18 +15,18 @@
         }
     </style>
 </head>
-<body onresize="rescale()" style="display: grid; grid-template-columns: 1fr min(95vw, 500px) 1fr; background: linear-gradient(
+<body onresize="rescale()" style="display: grid; grid-template-columns: 1fr min(99vw, 500px) 1fr; background: linear-gradient(
       217deg,
       rgba(255, 0, 0, 0.8),
       rgba(255, 0, 0, 0) 70.71%
     ), linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
     linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%); background-attachment: fixed;">
-    <div id="main-body" style="aspect-ratio: 720/1280; width: min(95vw, 500px); height: auto; background: #FFFFFF88; grid-column: 2; border-radius: 50px; display: grid; grid-template-rows: repeat(26, 1fr) 20px 1fr 20px; align-items: center; align-content: center; text-align: center">
+    <div id="main-body" style="aspect-ratio: 720/1280; width: min(99vw, 500px); height: auto; background: #FFFFFF88; grid-column: 2; border-radius: 50px; display: grid; grid-template-rows: repeat(26, 1fr) 20px 1fr 20px; align-items: center; align-content: center; text-align: center">
         <h1 style='font-size: 35px; grid-row: 1'>Загрузить Расписание</h1>
         <div>
             <select class="input-group" id="group-id" style="width: 25%;"></select>
             <div style="display: inline-block; width: 10px"></div>
-            <input id="next-week" type="checkbox" style="transform: translate(0px, 6px); margin: 0; padding-block: 0; padding-inline: 0; width: 20px; aspect-ratio: 1; height: auto">
+            <input onClick="getPregettedData();" id="next-week" type="checkbox" style="transform: translate(0px, 6px); margin: 0; padding-block: 0; padding-inline: 0; width: 20px; aspect-ratio: 1; height: auto">
             <p style="display: inline-block; font-size: 20px; margin: 0; font-weight: bold; transform: translateY(2px)">След. Неделя?</p>
         </div>
     </div>
@@ -50,6 +50,8 @@
         const teachersList = urlExtra[1];
         const groupsList = urlExtra[2];
         const cabinetsList = ["спортзал", "библиотека"];
+        const nextWeekList = urlExtra[3];
+        const curWeekList = urlExtra[4];
 
         for (let i = 0; i < 25; i++) {
             cabinetsList.push("" + (i + 1));
@@ -59,9 +61,33 @@
 
         const mainBody = document.getElementById("main-body");
 
+        function getPregettedData(){
+            let isNext = document.getElementById(first + "0").value;
+            let grpId = parseInt(document.getElementById("group-id").value);
+            if (groId == -1) return;
+
+            let toParseList = isNext ? nextWeekList : curWeekList;
+            let toParseWeek = toParseList[grpId];
+            if (toParseWeek.length < 10) return;
+            let parsedWeek = JSON.parse(toParseWeek);
+            
+            
+            for (let i = 0; i < 6; i++) {
+                let dayDataGetted = parsedWeek[i];
+                let first = "pairdata-" + i + "-";
+                document.getElementById(first + "0").value = "" + dayDataGetted[0];
+                for (let j = 1; j < 4; j++) {
+                    let pairDataGetted = dayDataGetted[j];
+                    document.getElementById(first + j + "-1").value = "" + pairDataGetted[0];
+                    document.getElementById(first + j + "-2").value = "" + pairDataGetted[1];
+                    document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
+                }
+            }
+            
+        }
 
         function rescale(){
-            mainBody.style.scale = Math.min(window.innerWidth * 0.95 / 500, 1);
+            mainBody.style.scale = Math.min(window.innerWidth * 0.99 / 500, 1);
         }
 
         const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
