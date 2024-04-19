@@ -172,8 +172,10 @@
         document.getElementById("next-week").addEventListener("click", getPregettedData);
                                                               
         function getPregettedData() {
-            let isNext = document.getElementById("next-week").value;
+            let isNext = document.getElementById("next-week").checked;
             let grpId = parseInt(document.getElementById("group-id").value);
+            tg.sendAlert(grpId);
+            alert(grpId);
             if (groId == -1) return;
 
             let toParseList = isNext ? nextWeekList : curWeekList;
