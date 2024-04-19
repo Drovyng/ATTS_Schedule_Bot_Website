@@ -60,34 +60,6 @@
         let pairsData = [];
 
         const mainBody = document.getElementById("main-body");
-        
-        document.getElementById("group-id").addEventListener("change", getPregettedData);
-        document.getElementById("next-week").addEventListener("click", getPregettedData);
-                                                              
-        function getPregettedData() {
-            let isNext = document.getElementById("next-week").value;
-            let grpId = parseInt(document.getElementById("group-id").value);
-            if (groId == -1) return;
-
-            let toParseList = isNext ? nextWeekList : curWeekList;
-            let toParseWeek = toParseList[grpId];
-            tg.sendAlert(toParseWeek.substring(0, 20));
-            if (toParseWeek.length < 10) return;
-            let parsedWeek = JSON.parse(toParseWeek);
-            
-            
-            for (let i = 0; i < 6; i++) {
-                let dayDataGetted = parsedWeek[i];
-                let first = "pairdata-" + i + "-";
-                document.getElementById(first + "0").value = "" + dayDataGetted[0];
-                for (let j = 1; j < 4; j++) {
-                    let pairDataGetted = dayDataGetted[j];
-                    document.getElementById(first + j + "-1").value = "" + pairDataGetted[0];
-                    document.getElementById(first + j + "-2").value = "" + pairDataGetted[1];
-                    document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
-                }
-            }
-        })ж
 
         function rescale(){
             mainBody.style.scale = Math.min(window.innerWidth * 0.99 / 500, 1);
@@ -194,6 +166,35 @@
             tg.sendData(JSON.stringify(toJson));
             tg.close();
         }
+        
+        
+        document.getElementById("group-id").addEventListener("change", getPregettedData);
+        document.getElementById("next-week").addEventListener("click", getPregettedData);
+                                                              
+        function getPregettedData() {
+            let isNext = document.getElementById("next-week").value;
+            let grpId = parseInt(document.getElementById("group-id").value);
+            if (groId == -1) return;
+
+            let toParseList = isNext ? nextWeekList : curWeekList;
+            let toParseWeek = toParseList[grpId];
+            tg.sendAlert(toParseWeek.substring(0, 20));
+            if (toParseWeek.length < 10) return;
+            let parsedWeek = JSON.parse(toParseWeek);
+            
+            
+            for (let i = 0; i < 6; i++) {
+                let dayDataGetted = parsedWeek[i];
+                let first = "pairdata-" + i + "-";
+                document.getElementById(first + "0").value = "" + dayDataGetted[0];
+                for (let j = 1; j < 4; j++) {
+                    let pairDataGetted = dayDataGetted[j];
+                    document.getElementById(first + j + "-1").value = "" + pairDataGetted[0];
+                    document.getElementById(first + j + "-2").value = "" + pairDataGetted[1];
+                    document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
+                }
+            }
+        });
     </script>
 </body>
 </html>
