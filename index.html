@@ -174,14 +174,10 @@
         function getPregettedData() {
             let isNext = document.getElementById("next-week").checked;
             let grpId = parseInt(document.getElementById("group-id").value);
-            tg.sendAlert(grpId);
-            alert(grpId);
             if (groId == -1) return;
 
             let toParseList = isNext ? nextWeekList : curWeekList;
             let toParseWeek = toParseList[grpId];
-            tg.sendAlert(toParseWeek.substring(0, 10));
-            alert(toParseWeek.substring(0, 10));
             if (toParseWeek.length < 10) return;
             let parsedWeek = JSON.parse(toParseWeek);
             
