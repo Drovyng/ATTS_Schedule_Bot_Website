@@ -60,9 +60,9 @@
         let pairsData = [];
 
         const mainBody = document.getElementById("main-body");
-
-        function getPregettedData(){
-            let isNext = document.getElementById(first + "0").value;
+        
+        document.getElementById("next-week").addEventListener("click", (e) => {
+            let isNext = document.getElementById("next-week").value;
             let grpId = parseInt(document.getElementById("group-id").value);
             if (groId == -1) return;
 
@@ -83,8 +83,7 @@
                     document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
                 }
             }
-            
-        }
+        })ж
 
         function rescale(){
             mainBody.style.scale = Math.min(window.innerWidth * 0.99 / 500, 1);
