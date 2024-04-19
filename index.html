@@ -174,7 +174,7 @@
         function getPregettedData() {
             let isNext = document.getElementById("next-week").checked;
             let grpId = parseInt(document.getElementById("group-id").value);
-            if (groId == -1) return;
+            if (grpId == -1) return;
 
             let toParseList = isNext ? nextWeekList : curWeekList;
             let toParseWeek = toParseList[grpId];
