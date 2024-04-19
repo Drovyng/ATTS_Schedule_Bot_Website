@@ -185,7 +185,7 @@
             for (let i = 0; i < 6; i++) {
                 let dayDataGetted = parsedWeek[i];
                 let first = "pairdata-" + i + "-";
-                document.getElementById(first + "0").value = "" + dayDataGetted[0];
+                document.getElementById(first + "0").value = "" + (dayDataGetted[0] == -1 ? 0 : dayDataGetted[0]);
                 for (let j = 1; j < 4; j++) {
                     let pairDataGetted = dayDataGetted[j];
                     document.getElementById(first + j + "-1").value = "" + pairDataGetted[0];
