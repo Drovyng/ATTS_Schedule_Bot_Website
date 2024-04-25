@@ -53,6 +53,8 @@
         const curWeekList = urlExtra[3];
         const nextWeekList = urlExtra[4];
 
+        const isFromExel = nextWeekList === 1;
+
         for (let i = 0; i < 25; i++) {
             cabinetsList.push("" + (i + 1));
         }
@@ -173,10 +175,10 @@
         document.getElementById("next-week").addEventListener("click", getPregettedData);
                                                               
         function getPregettedData() {
-            let isNext = document.getElementById("next-week").checked;
-            let grpId = parseInt(document.getElementById("group-id").value);
+            let isNext = isFromExel ? false : document.getElementById("next-week").checked;
+            let grpId = isFromExel ? 0 : parseInt(document.getElementById("group-id").value);
             if (grpId == -1) return;
-
+            
             let toParseList = isNext ? nextWeekList : curWeekList;
             let toParseWeek = toParseList[grpId];
             if (toParseWeek.length < 10) return;
