@@ -50,8 +50,8 @@
         const teachersList = urlExtra[1];
         const groupsList = urlExtra[2];
         const cabinetsList = ["спортзал", "библиотека"];
-        const curWeekList = urlExtra[3];
-        const nextWeekList = urlExtra[4];
+        const curWeek = urlExtra[3];
+        const nextWeek = urlExtra[4];
 
         const isFromExel = nextWeekList === 1;
 
@@ -174,7 +174,6 @@
         }
         
         
-        document.getElementById("group-id").addEventListener("change", getPregettedData);
         document.getElementById("next-week").addEventListener("click", getPregettedData);
                                                               
         function getPregettedData() {
@@ -182,8 +181,7 @@
             let grpId = isFromExel ? 0 : parseInt(document.getElementById("group-id").value);
             if (grpId == -1) return;
             
-            let toParseList = isNext ? nextWeekList : curWeekList;
-            let toParseWeek = toParseList[grpId];
+            let toParseWeek = isNext ? nextWeek : curWeek;
             if (toParseWeek.length < 10) return;
             let parsedWeek = JSON.parse(toParseWeek);
             
