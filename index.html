@@ -179,7 +179,6 @@
         function getPregettedData() {
             let isNext = isFromExel ? false : document.getElementById("next-week").checked;
             let grpId = isFromExel ? 0 : parseInt(document.getElementById("group-id").value);
-            if (grpId == -1) return;
             
             let toParseWeek = isNext ? nextWeek : curWeek;
             if (toParseWeek.length < 10) return;
