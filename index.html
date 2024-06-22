@@ -181,8 +181,15 @@
             let grpId = isFromExel ? 0 : parseInt(document.getElementById("group-id").value);
             
             let toParseWeek = isNext ? nextWeek : curWeek;
-            if (toParseWeek.length < 10) return;
-            let parsedWeek = JSON.parse(toParseWeek);
+            let parsedWeek = [
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
+            ]
+            if (toParseWeek.length >= 10) parsedWeek = JSON.parse(toParseWeek);
             
             
             for (let i = 0; i < 6; i++) {
