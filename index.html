@@ -74,7 +74,10 @@
             pairsData.push([0, 0, 0, 0]);
             mainBody.innerHTML += "<div>\n" +
                 "            <h2 style='font-size: min(4.75vw, 25px)'>" + days[i] + "</h2>\n" +
-                "            <select class='select-offset' id='pairdata-" + i + "-0' style=\"width: 25%; transform: translateY(-10px);\"></select>\n" +
+                "            <div>\n" +
+                "                <select class='select-offset' id='pairdata-" + i + "-0-1' style=\"width: 25%; transform: translateY(-10px);\"></select>\n" +
+                "                <input type='text' id='pairdata-" + i + "-0-2' style=\"width: 20%;\"></input>\n" +
+                "            </div style='width: 100%'>\n" +
                 "        </div>\n" +
                 "        <div>\n" +
                 "            <select class='select-pair' id='pairdata-" + i + "-1-1' style=\"width: 40%\"></select>\n" +
@@ -159,7 +162,7 @@
             let toJson = [parseInt(document.getElementById("group-id").value), document.getElementById("next-week").checked ? 1 : 0];
             for (let i = 0; i < 6; i++) {
                 let first = "pairdata-" + i + "-";
-                let data = [getOrNull(document.getElementById(first + "0").value)];
+                let data = [getOrNull(document.getElementById(first + "0-1").value)];
                 for (let j = 1; j < 4; j++) {
                     data.push([
                         getOrNull(document.getElementById(first + j + "-1").value),
@@ -168,6 +171,9 @@
                     ]);
                 }
                 toJson.push(data);
+            }
+            for (let i = 0; i < 6; i++) {
+                toJson.push(document.getElementById("pairdata-" + i + "-0-2").value);
             }
             tg.sendData(JSON.stringify(toJson));
             tg.close();
@@ -187,7 +193,13 @@
                 [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
                 [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
                 [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]], 
-                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
+                [-1, [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]],
+                "21230",
+                "21230",
+                "21230",
+                "21230",
+                "21230",
+                "21230"
             ]
             if (toParseWeek.length >= 10) parsedWeek = JSON.parse(toParseWeek);
             
@@ -195,13 +207,14 @@
             for (let i = 0; i < 6; i++) {
                 let dayDataGetted = parsedWeek[i];
                 let first = "pairdata-" + i + "-";
-                document.getElementById(first + "0").value = "" + (dayDataGetted[0] == -1 ? 0 : dayDataGetted[0]);
+                document.getElementById(first + "0-1").value = "" + (dayDataGetted[0] == -1 ? 0 : dayDataGetted[0]);
                 for (let j = 1; j < 4; j++) {
                     let pairDataGetted = dayDataGetted[j];
                     document.getElementById(first + j + "-1").value = "" + pairDataGetted[0];
                     document.getElementById(first + j + "-2").value = "" + pairDataGetted[1];
                     document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
                 }
+                document.getElementById(first + "0-2").value = "" + parsedWeek[i+6];
             }
         }
         getPregettedData();
