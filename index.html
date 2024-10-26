@@ -76,7 +76,7 @@
                 "            <h2 style='font-size: min(4.75vw, 25px)'>" + days[i] + "</h2>\n" +
                 "            <div>\n" +
                 "                <select class='select-offset' id='pairdata-" + i + "-0-1' style=\"width: 25%; transform: translateY(-10px);\"></select>\n" +
-                "                <input type='text' id='pairdata-" + i + "-0-2' style=\"width: 20%;\"></input>\n" +
+                "                <input type='text' id='pairdata-" + i + "-0-2' style=\"width: 20%; transform: translateY(-10px);\"></input>\n" +
                 "            </div style='width: 100%'>\n" +
                 "        </div>\n" +
                 "        <div>\n" +
@@ -214,7 +214,9 @@
                     document.getElementById(first + j + "-2").value = "" + pairDataGetted[1];
                     document.getElementById(first + j + "-3").value = "" + pairDataGetted[2];
                 }
-                document.getElementById(first + "0-2").value = "" + parsedWeek[i+6];
+                let tm = parsedWeek[i+6];
+                if (!tm) tm = "21230"
+                document.getElementById(first + "0-2").value = "" + tm;
             }
         }
         getPregettedData();
